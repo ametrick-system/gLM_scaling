@@ -1,4 +1,19 @@
-"""Training loop for one isoFLOP point"""
+"""
+Training loop for one isoFLOP point
+
+A few crucial details:
+
+* A run is defined by a TOKEN BUDGET, not an iteration count (it stops at
+   exactly `tokens`, so every run inside a compute budget costs the same
+   FLOPs)
+
+* The cosine LR schedule decays to `min_lr` over exactly that token budget
+
+* Warmup is a fixed FRACTION of the run, and AdamW betas/weight-decay are
+    held constant across the whole sweep
+
+* Loss is logged in nats/token and bits/nucleotide (the DNA-LM convention)
+"""
 
 from __future__ import annotations
 
@@ -20,10 +35,13 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from design import peak_flops_for_device
 from model import GPT, GPTConfig
 
-LN2 = math.log(2.0)
+LN2 = math.log(2.0) # bits/nt = loss / ln(2)
 
 class MemmapTokens:
-    """Sampling from flat uint8 token file (uniformly at random)"""
+    """
+    Random crops from a flat uint8 token file
+    (uniformly at random following the nanoGPT convention)
+    """
 
     def __init__(self, path: str, block_size: int, seed: int = 0):
         self.data = np.memmap(path, dtype=np.uint8, mode="r")
@@ -50,9 +68,8 @@ class MemmapTokens:
             )
         return x.to(device), y.to(device)
 
-
 class SequentialTokens:
-    """Deterministic non-overlapping crops -- used for validation"""
+    """Deterministic non-overlapping crops (for validation)"""
 
     def __init__(self, path: str, block_size: int):
         self.data = np.memmap(path, dtype=np.uint8, mode="r")
@@ -80,7 +97,6 @@ def lr_at(step: int, total_steps: int, lr: float, min_lr: float,
     prog = (step - warmup) / max(1, total_steps - warmup)
     prog = min(1.0, prog)
     return min_lr + 0.5 * (lr - min_lr) * (1.0 + math.cos(math.pi * prog))
-
 
 @torch.no_grad()
 def evaluate(model, val: SequentialTokens, batch_size: int, device: str,
@@ -169,10 +185,11 @@ def main():
     total_steps = max(1, spec["tokens"] // tokens_per_step)
     min_lr = a.lr * a.min_lr_frac
 
-    # -- repetition bookkeeping for the D' fit -------------------------
+    # repetition bookkeeping for the D' fit
     u_d = train.n_unique_tokens
     r_d = spec["tokens"] / u_d - 1.0
 
+    # peak FLOP/s for the MFU denominator
     dev_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else None
     peak_src, peak = "none", None
     resolved = peak_flops_for_device(dev_name) if dev_name else None
@@ -239,6 +256,8 @@ def main():
     log = open(out / "log.jsonl", "a")
     t0 = time.time()
     seen = 0
+
+    # measure MFU over a window
     win_t, win_tok = t0, 0
 
     stop_at = total_steps if a.max_steps is None else min(a.max_steps, total_steps)
@@ -293,7 +312,7 @@ def main():
             win_t, win_tok = time.time(), seen
 
     final = evaluate(model, val, a.micro_batch, a.device, ctx, max_batches=500)
-    final_name = "final.json" if a.max_steps is None else "final_TRUNCATED.json"
+    final_name = "final.json" if a.max_steps is None else "final_TRUNCATED.json" # indicate if run was truncated
     (out / final_name).write_text(json.dumps({
         "truncated": a.max_steps is not None,
         "run_id": run_id, "tokens_seen": seen,
@@ -312,7 +331,6 @@ def main():
         )
     log.close()
     print(f"done {run_id}: {final['val_bits_per_nt']:.4f} bits/nt")
-
 
 if __name__ == "__main__":
     main()

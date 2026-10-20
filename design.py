@@ -1,4 +1,15 @@
-"""IsoFLOP experiment designer"""
+"""
+IsoFLOP experiment designer
+
+Design:
+  * `budgets`      : compute budgets C in FLOPs (4, spanning 3 orders)
+  * `n_sizes`      : model sizes per budget, geometric around Chinchilla-opt
+  * `spread_levels`: corpora of differing evolutionary spread per (C, N)
+  * `seeds`        : replicate seeds
+
+At each (C, N): D = C / flops_per_token(N),
+so every run in a budget costs the same FLOPs by construction
+"""
 
 from __future__ import annotations
 
@@ -12,8 +23,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from flops import flops_per_token, param_counts, shape_for_target_params
 
-HUMAN_GENOME_TOKENS = 3.1e9 # hg38 non-N, single strand
-MAMMAL_GENOME_TOKENS = 2.7e9 # rough Zoonomia average
+HUMAN_GENOME_TOKENS = 3.1e9      # hg38 non-N, single strand
+MULTIZ_CORE_TOKENS = 0.227 * HUMAN_GENOME_TOKENS   # ~0.70e9, multiz100way
 
 @dataclass
 class Run:
@@ -40,11 +51,16 @@ class Run:
             + f"_{self.spread}_s{self.seed}"
         )
 
-
 def chinchilla_optimal_n(budget: float, tokens_per_param: float = 20.0) -> float:
     """N such that C = 6*N*D with D = tokens_per_param * N."""
     return (budget / (6.0 * tokens_per_param)) ** 0.5
 
+LR_COEF = 4.57e-2       # log(LR_opt) = log(LR_COEF) + LR_EXP * log(N_non_embed)
+LR_EXP = -0.253         # max |log-residual| across the 4 anchors = 0.057
+
+def lr_for(n_non_embedding: float) -> float:
+    """Frozen peak learning rate for a model of N non-embedding parameters"""
+    return LR_COEF * float(n_non_embedding) ** LR_EXP
 
 def build_grid(
     budgets: list[float],
@@ -52,13 +68,15 @@ def build_grid(
     block_size: int = 1024,
     vocab_size: int = 8,
     n_sizes: int = 5,
-    size_span: float = 4.0, # ratio of largest to Chinchilla-opt
+    size_span: float = 4.0,
     spread_levels: tuple[str, ...] = ("narrow", "medium", "broad"),
-    seeds: tuple[int, ...] = (0,), # 1 seed per point
+    seeds: tuple[int, ...] = (0,),
     tokens_per_param: float = 20.0,
     aspect_ratio: int = 64,
 ) -> list[Run]:
+    """Enumerate every run. `size_span` = ratio of largest to Chinchilla-opt"""
     runs: list[Run] = []
+    # geometric multipliers centred on 1.0, e.g. 5 sizes over [1/4, 4]
     lo = 1.0 / size_span
     mults = [lo * (size_span**2) ** (i / (n_sizes - 1)) for i in range(n_sizes)]
 
@@ -97,7 +115,6 @@ def build_grid(
                 )
     return runs
 
-
 def noise_floor_design(
     budgets: list[float],
     *,
@@ -119,7 +136,7 @@ GPUS: dict[str, tuple[float, float]] = {
     "rtx-a6000":           (155e12, 48.0),
     "quadro-rtx-6000":     (65e12,  24.0),   # Turing: no bf16, no TF32
     # Bouchet's other cards
-    "h200":                (989e12, 141.0),  # same compute as H100, more HBM
+    "h200":                (989e12, 141.0),
     "b200":                (2250e12, 180.0),
     "l40s":                (362e12, 48.0),
     "a40":                 (149.7e12, 48.0),
@@ -143,20 +160,26 @@ _DEVICE_PATTERNS: tuple[tuple[str, str], ...] = (
 )
 
 def peak_flops_for_device(device_name: str) -> tuple[str, float] | None:
+    """
+    Resolve dense bf16 peak FLOP/s from a live device name
+    Returns (GPUS key, peak) or None if the card is not in the table
+    """
     low = device_name.lower()
     for needle, key in _DEVICE_PATTERNS:
         if needle in low:
             return key, GPUS[key][0]
     return None
 
-
 def cost_report(
     runs: list[Run],
     *,
     gpu: str | None = None,
-    gpu_peak_flops: float = 989e12,   # H100 SXM, bf16 dense
+    gpu_peak_flops: float = 989e12, # H100 SXM, bf16 dense
     mfu: float = 0.35,
 ) -> dict:
+    """
+    GPU-hours at an assumed model-FLOPs-utilisation
+    """
     if gpu is not None:
         gpu_peak_flops = GPUS[gpu][0]
     total = sum(r.budget_flops for r in runs)
@@ -174,7 +197,6 @@ def cost_report(
         / MAMMAL_GENOME_TOKENS,
     }
 
-
 def data_constraint_crossover(
     block_size: int = 1024,
     vocab_size: int = 8,
@@ -182,7 +204,9 @@ def data_constraint_crossover(
     unique_tokens: float = HUMAN_GENOME_TOKENS,
     aspect_ratio: int = 64,
 ) -> dict:
-    """Compute budget at which Chinchilla-optimal D exceeds one genome"""
+    """
+    Compute budget at which Chinchilla-optimal D exceeds one genome
+    """
     n_star = unique_tokens / tokens_per_param
     shape = shape_for_target_params(n_star, aspect_ratio=aspect_ratio)
     fpt = flops_per_token(

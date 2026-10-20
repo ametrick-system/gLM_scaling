@@ -1,5 +1,10 @@
 """
 Adapted from nanoGPT/model.py
+
+Changes:
+  * vocab_size defaults to 8 (A C G T N + 3 pad slots for tensor alignment)
+  * pos_emb="rope" available to simplify parameter counting (but default "learned" still an option)
+  * biases default off
 """
 
 from __future__ import annotations
@@ -25,19 +30,20 @@ class GPTConfig:
     n_head: int = 12
     n_embd: int = 768
     ffn_mult: int = 4
-    dropout: float = 0.0 # 0 for single-epoch scaling runs
+    dropout: float = 0.0 # 0.0 for single-epoch scaling runs
     bias: bool = False
-    pos_emb: str = "rope" # "rope" for no added parameters | "learned" to reproduce nanoGPT/GPT-2
+    pos_emb: str = "rope" # "rope" | "learned"
     tie_embeddings: bool = True
 
 
-# ------------------------------------ RoPE ------------------------------------
+## RoPE ##################################################################################
 
 def _rope_cache(seq_len: int, head_dim: int, device, dtype, base: float = 10000.0):
     inv = 1.0 / (base ** (torch.arange(0, head_dim, 2, device=device).float() / head_dim))
     t = torch.arange(seq_len, device=device).float()
     freqs = torch.outer(t, inv)
     return torch.cos(freqs).to(dtype), torch.sin(freqs).to(dtype)
+
 
 def _apply_rope(x: torch.Tensor, cos: torch.Tensor, sin: torch.Tensor) -> torch.Tensor:
     # x: (B, nh, T, hd)
@@ -49,7 +55,7 @@ def _apply_rope(x: torch.Tensor, cos: torch.Tensor, sin: torch.Tensor) -> torch.
     out[..., 1::2] = x1 * sin + x2 * cos
     return out
 
-# ------------------------------------ Blocks ------------------------------------
+## Blocks ############################################################################
 
 class CausalSelfAttention(nn.Module):
     def __init__(self, cfg: GPTConfig):
@@ -79,7 +85,6 @@ class CausalSelfAttention(nn.Module):
         y = y.transpose(1, 2).contiguous().view(B, T, C)
         return self.c_proj(y)
 
-
 class MLP(nn.Module):
     def __init__(self, cfg: GPTConfig):
         super().__init__()
@@ -90,7 +95,6 @@ class MLP(nn.Module):
 
     def forward(self, x):
         return self.drop(self.c_proj(F.gelu(self.c_fc(x), approximate="tanh")))
-
 
 class Block(nn.Module):
     def __init__(self, cfg: GPTConfig):
@@ -104,7 +108,8 @@ class Block(nn.Module):
         x = x + self.attn(self.ln_1(x), rope=rope)
         return x + self.mlp(self.ln_2(x))
 
-# ------------------------------------ GPT ------------------------------------
+
+## GPT ##################################################################################
 
 class GPT(nn.Module):
     def __init__(self, cfg: GPTConfig):
@@ -138,7 +143,7 @@ class GPT(nn.Module):
             nn.init.normal_(m.weight, mean=0.0, std=0.02)
 
     def param_report(self) -> dict:
-        """Analytic counts (flops.py) plus the true counts from the module."""
+        """Analytic counts (flops.py) plus the true counts from the module"""
         c = self.cfg
         rep = param_counts(
             c.n_layer, c.n_embd, c.vocab_size, c.block_size,
@@ -189,12 +194,8 @@ class GPT(nn.Module):
         return logits, loss
 
     def configure_optimizers(self, weight_decay, learning_rate, betas, device_type):
-        """AdamW with decay on 2D params only (nanoGPT convention).
-
-        Note for the thesis: Porian et al. (2025) show AdamW settings --
-        especially that beta2 and warmup are held fixed across scales -- are
-        part of why Kaplan and Chinchilla disagreed. Keep these constant
-        across the sweep and record them in every run's config.
+        """
+        AdamW with decay on 2D params only
         """
         decay, no_decay = [], []
         for _, p in self.named_parameters():

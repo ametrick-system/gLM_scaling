@@ -1,0 +1,80 @@
+{
+  "run_id": "C2e17_N108.0M_validate_N100M_s0",
+  "spec": {
+    "run_id": "C2e17_N108.0M_validate_N100M_s0",
+    "budget_flops": 2.347278336e+17,
+    "size_index": 0,
+    "n_layer": 13,
+    "n_head": 13,
+    "n_embd": 832,
+    "n_non_embedding": 108009408,
+    "n_total": 108016064,
+    "block_size": 1024,
+    "tokens": 300000000,
+    "flops_per_token": 782426112.0,
+    "tokens_per_param": 2.777535823546038,
+    "frac_attention_flops": 0.17185585953450389,
+    "spread": "validate_N100M",
+    "seed": 0
+  },
+  "model_config": {
+    "block_size": 1024,
+    "vocab_size": 8,
+    "n_layer": 13,
+    "n_head": 13,
+    "n_embd": 832,
+    "ffn_mult": 4,
+    "dropout": 0.0,
+    "bias": false,
+    "pos_emb": "rope",
+    "tie_embeddings": true
+  },
+  "param_report": {
+    "n_non_embedding": 108009408,
+    "n_embedding": 6656,
+    "n_total": 108016064,
+    "n_per_layer": 8308352,
+    "actual_total": 108016064,
+    "actual_non_embedding": 108009408
+  },
+  "optim": {
+    "lr": 0.0004343,
+    "min_lr": 4.343e-05,
+    "weight_decay": 0.1,
+    "betas": [
+      0.9,
+      0.95
+    ],
+    "grad_clip": 1.0,
+    "warmup_frac": 0.01,
+    "schedule": "cosine_to_token_budget"
+  },
+  "batching": {
+    "micro_batch": 32,
+    "grad_accum": 8,
+    "tokens_per_step": 262144,
+    "total_steps": 1144
+  },
+  "data": {
+    "train_bin": "/home/asm242/glm_mccleary/data/hg38_train.bin",
+    "val_bin": "/home/asm242/glm_mccleary/data/hg38_val.bin",
+    "unique_tokens_U_D": 2477031141,
+    "repetitions_R_D": -0.878887271526636,
+    "epochs_equivalent": 0.12111272847336399
+  },
+  "truncated": false,
+  "max_steps": null,
+  "device": "cuda",
+  "dtype": "bfloat16",
+  "torch": "2.11.0+cu128",
+  "hardware": {
+    "node": null,
+    "gpu": null,
+    "slurm_job": null,
+    "torch_cuda_build": "12.8",
+    "mfu_peak_flops": null,
+    "mfu_peak_source": "none",
+    "device_name": "NVIDIA GeForce RTX 3090",
+    "capability": "sm_86"
+  }
+}

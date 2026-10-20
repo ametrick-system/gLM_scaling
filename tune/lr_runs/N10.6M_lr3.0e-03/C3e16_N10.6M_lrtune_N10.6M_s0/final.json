@@ -1,0 +1,15 @@
+{
+  "truncated": false,
+  "run_id": "C3e16_N10.6M_lrtune_N10.6M_s0",
+  "tokens_seen": 299892736,
+  "flops_spent": 2.769891840176947e+16,
+  "budget_flops": 2.77088256e+16,
+  "n_non_embedding": 10621824,
+  "spread": "lrtune_N10.6M",
+  "seed": 0,
+  "unique_tokens_U_D": 2477031141,
+  "repetitions_R_D": -0.878887271526636,
+  "val_loss_nats": 1.2248137825727463,
+  "val_bits_per_nt": 1.7670327701301543,
+  "val_tokens_scored": 32768000
+}

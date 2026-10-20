@@ -1,0 +1,17 @@
+{
+  "human": "hg38",
+  "min_species": 18,
+  "_core_species_note": "The FIXED ladder the orthologous core is defined over (>=18 of these 20 present). MUST equal the non-ref species in the subset MAF redundancy.py measured (it printed 'required non-ref spp : N') so f_core reproduces ~0.227 on chr1. Verify before the full build.",
+  "core_species": [
+    "panTro4", "gorGor3", "ponAbe2", "nomLeu3",
+    "rheMac3", "papAnu2", "chlSab2", "calJac3",
+    "otoGar3", "mm10", "oryCun2", "cavPor3",
+    "canFam3", "equCab2", "bosTau8", "myoLuc2",
+    "loxAfr3", "triMan1", "dasNov3", "echTel2"
+  ],
+  "conditions": {
+    "narrow": ["panTro4", "gorGor3", "ponAbe2", "nomLeu3"],
+    "medium": ["rheMac3", "papAnu2", "chlSab2", "calJac3"],
+    "broad":  ["canFam3", "equCab2", "bosTau8", "loxAfr3"]
+  }
+}

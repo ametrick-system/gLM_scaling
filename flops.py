@@ -4,8 +4,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 def param_counts(
-    n_layer: int,
-    n_embd: int,
+    n_layers: int,
+    d_model: int,
     vocab_size: int,
     block_size: int,
     *,
@@ -14,33 +14,41 @@ def param_counts(
     tie_embeddings: bool = True,
     bias: bool = False,
 ) -> dict[str, int]:
-    """Parameter counts, split into embedding and non-embedding
-
-    Non-embedding: 
-    12 * n_layer * n_embd**2 for a pre-LN transformer with 4x MLP expansion (4 * d^2 attention + 8 * d^2 MLP),
-    plus LayerNorm gains (and biases, and projection biases, if bias=True)
-
+    """
+    Parameter counts, split into embedding and non-embedding
     Exact agreement with the live module is checked by tests/test_accounting.py
     """
-    d = n_embd
-    nb = 1 if bias else 0
-    attn = 4 * d * d + nb * (3 * d + d)   # q,k,v (3d) + out proj (d) biases
-    mlp = 2 * ffn_mult * d * d + nb * (ffn_mult * d + d)
-    ln = 2 * (1 + nb) * d                 # two LayerNorms per block
-    per_layer = attn + mlp + ln
-    non_embedding = n_layer * per_layer + (1 + nb) * d   # + final LayerNorm
+    d = d_model
+    d_ff = ffn_mult * d
 
-    tok_emb = vocab_size * d
-    pos = block_size * d if pos_emb == "learned" else 0
-    # untied output head is a separate matrix
-    head = 0 if tie_embeddings else vocab_size * d
-    embedding = tok_emb + pos + head
+    bias_param = 0
+    if bias:
+        attention_bias = 4 * d # d for each of q, k, v, out projection
+        ff_bias = d_ff + d # one bias param for each output and input to ff
+        ln_bias = 2 * d # 2 LayerNorms per block
+        bias_param += n_layers * (attention_bias + ff_bias + ln_bias) + d # +d for final LayerNorm 
+
+    # non-embedding parameters
+    attention_param = 4 * d * d # q, k, v, out
+    ff_param = 2 * d_ff * d # d -> d_ff then d_ff -> d
+    ln_param = 2 * d
+
+    per_layer = attention_param + ff_param + ln_param
+
+    non_embedding_param = n_layers * per_layer + d + bias_param # +d for final LayerNorm
+
+    # embedding parameters
+    token_embedding_param = vocab_size * d 
+    position_embedding_param = block_size * d if pos_emb == "learned" else 0 # 0 if RoPE (default)
+    head_param = 0 if tie_embeddings else vocab_size * d # extra matrix if embedding weights not shared with head
+    
+    embedding_param = token_embedding_param + position_embedding_param + head_param
 
     return {
-        "n_non_embedding": non_embedding,
-        "n_embedding": embedding,
-        "n_total": non_embedding + embedding,
-        "n_per_layer": per_layer,
+        "n_non_embedding": non_embedding_param,
+        "n_embedding": embedding_param,
+        "n_total": non_embedding_param + embedding_param,
+        "n_per_layer": per_layer, # without bias
     }
 
 def flops_per_token(
