@@ -1,0 +1,65 @@
+CONDA FILECOUNT WARNING: the file count in your home filesystem has reached 
+ a substantial fraction of the allowed limit ( 413k / 500k ).
+
+Please contact hpc@yale.edu for help transferring your conda folder(s):
+/home/asm242/.conda/envs -> please move and symlink to another filesystem
+/home/asm242/.conda/pkgs -> please move and symlink to another filesystem
+
+This will prevent conda pushing your home file count over the limit.
+
+parsing 2 MAF file(s) for human=hg38 min_species=18...
+  ...200,000 blocks | 5.4M human cols | 0.35M core | 16s
+  ...400,000 blocks | 11.1M human cols | 1.18M core | 32s
+  ...600,000 blocks | 16.5M human cols | 2.01M core | 49s
+  ...800,000 blocks | 21.3M human cols | 3.12M core | 68s
+  ...1,000,000 blocks | 25.8M human cols | 4.36M core | 86s
+  ...1,200,000 blocks | 30.3M human cols | 5.31M core | 104s
+  ...1,400,000 blocks | 35.3M human cols | 6.70M core | 122s
+  ...1,600,000 blocks | 40.2M human cols | 7.87M core | 141s
+  ...1,800,000 blocks | 48.5M human cols | 8.60M core | 158s
+  ...2,000,000 blocks | 55.1M human cols | 9.20M core | 175s
+  ...2,200,000 blocks | 60.6M human cols | 10.24M core | 193s
+  ...2,400,000 blocks | 66.1M human cols | 11.51M core | 212s
+  ...2,600,000 blocks | 70.9M human cols | 12.60M core | 231s
+  ...2,800,000 blocks | 76.2M human cols | 13.93M core | 250s
+  ...3,000,000 blocks | 81.5M human cols | 15.20M core | 269s
+  ...3,200,000 blocks | 87.3M human cols | 16.10M core | 287s
+  ...3,400,000 blocks | 93.3M human cols | 17.34M core | 306s
+  ...3,600,000 blocks | 98.1M human cols | 18.43M core | 324s
+  ...3,800,000 blocks | 102.8M human cols | 19.38M core | 343s
+  ...4,000,000 blocks | 108.2M human cols | 20.76M core | 362s
+  ...4,200,000 blocks | 114.3M human cols | 21.75M core | 380s
+  ...4,400,000 blocks | 119.6M human cols | 23.56M core | 399s
+  ...4,600,000 blocks | 124.5M human cols | 24.61M core | 418s
+  ...4,800,000 blocks | 130.0M human cols | 25.88M core | 436s
+  ...5,000,000 blocks | 135.6M human cols | 26.79M core | 453s
+  ...5,200,000 blocks | 141.5M human cols | 27.31M core | 470s
+  ...5,400,000 blocks | 145.8M human cols | 27.50M core | 489s
+  ...5,600,000 blocks | 150.4M human cols | 27.87M core | 507s
+  ...5,800,000 blocks | 155.4M human cols | 29.10M core | 526s
+  ...6,000,000 blocks | 160.7M human cols | 30.73M core | 546s
+  ...6,200,000 blocks | 165.5M human cols | 32.30M core | 566s
+  ...6,400,000 blocks | 171.6M human cols | 33.21M core | 583s
+  ...6,600,000 blocks | 177.0M human cols | 34.82M core | 603s
+  ...6,800,000 blocks | 181.6M human cols | 36.24M core | 622s
+  ...7,000,000 blocks | 187.5M human cols | 37.39M core | 640s
+  ...7,200,000 blocks | 192.0M human cols | 38.69M core | 659s
+  ...7,400,000 blocks | 201.6M human cols | 39.06M core | 676s
+  ...7,600,000 blocks | 206.7M human cols | 39.72M core | 694s
+  ...7,800,000 blocks | 210.9M human cols | 40.60M core | 713s
+  ...8,000,000 blocks | 215.6M human cols | 41.04M core | 731s
+  ...8,200,000 blocks | 220.5M human cols | 42.21M core | 749s
+  ...8,400,000 blocks | 225.7M human cols | 43.77M core | 769s
+  ...8,600,000 blocks | 231.1M human cols | 45.22M core | 787s
+  ...8,800,000 blocks | 237.1M human cols | 46.47M core | 805s
+  ...9,000,000 blocks | 243.2M human cols | 47.63M core | 824s
+  ...9,200,000 blocks | 248.4M human cols | 48.68M core | 843s
+  ...9,400,000 blocks | 253.7M human cols | 49.60M core | 860s
+  ...9,600,000 blocks | 258.4M human cols | 51.10M core | 880s
+  ...9,800,000 blocks | 262.9M human cols | 52.75M core | 900s
+  ...10,000,000 blocks | 267.4M human cols | 54.11M core | 919s
+  ...10,200,000 blocks | 272.2M human cols | 55.53M core | 939s
+  ...10,400,000 blocks | 277.2M human cols | 57.35M core | 959s
+parse done: 10,476,527 blocks, 966s
+f_core = 0.2070  (57,804,272 core / 279,192,693 human-valid columns, >= 18 of 20 core species)
+  val          k=0 tokens=57,804,272 GC=0.404 seps=0

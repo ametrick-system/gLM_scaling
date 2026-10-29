@@ -1,4 +1,10 @@
 data/chr20.subset.maf
+data/corpora/broad.bin
+data/corpora/broad.mask.bin
+data/corpora/medium.bin
+data/corpora/medium.mask.bin
+data/corpora/narrow.bin
+data/corpora/narrow.mask.bin
 data/fasta/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa.gz
 data/multiz100way/chr1.maf.gz
 data/multiz100way/chr11.maf.gz

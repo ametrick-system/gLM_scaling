@@ -19,15 +19,17 @@ from pathlib import Path
 import numpy as np
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from prepare_data import (
-    AMBIG_ID, ID_TO_BASE, PAD_VOCAB, _LUT, _MASK_LUT, encode,
+
+from prepare import (
+    BASE_TO_ID, ID_TO_BASE, PAD_VOCAB,
+    LOOKUP_TABLE as _LUT, REPEAT_LOOKUP_TABLE as _MASK_LUT,
 )
+AMBIG_ID = BASE_TO_ID["N"]
 
 _DASH = ord("-")
 _VALID = np.zeros(256, dtype=bool)
 for _c in b"ACGTacgt":
     _VALID[_c] = True
-
 
 def iter_maf_blocks(path: Path):
     """Yield {species: aligned_text} per alignment block (species = src before first '.')"""
@@ -124,7 +126,6 @@ def build_core(maf_paths, human: str, min_species: int, core_species, want,
                        np.frombuffer(buf_msk[sp], np.uint8))
     return streams, n_core, n_human_valid
 
-
 def write_condition(out_prefix, human, species, streams, sep_id, maf_path,
                     min_species, f_core, core_species=None):
     hid, hmk = streams[human]
@@ -171,7 +172,6 @@ def write_condition(out_prefix, human, species, streams, sep_id, maf_path,
     with open(str(out_prefix) + ".meta.json", "w") as fh:
         json.dump(meta, fh, indent=2)
     return meta
-
 
 def main():
     p = argparse.ArgumentParser(description=__doc__,

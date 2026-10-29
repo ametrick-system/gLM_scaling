@@ -1,0 +1,148 @@
+
+CondaError: Run 'conda init' before 'conda deactivate'
+
+CONDA FILECOUNT WARNING: the file count in your home filesystem has reached 
+ a substantial fraction of the allowed limit ( 409k / 500k ).
+
+Please contact hpc@yale.edu for help transferring your conda folder(s):
+/home/asm242/.conda/envs -> please move and symlink to another filesystem
+/home/asm242/.conda/pkgs -> please move and symlink to another filesystem
+
+This will prevent conda pushing your home file count over the limit.
+
+parsing 3 MAF file(s) for human=hg38 min_species=18...
+  ...200,000 blocks | 3.7M human cols | 0.15M core | 18s
+  ...400,000 blocks | 8.4M human cols | 0.86M core | 38s
+  ...600,000 blocks | 12.3M human cols | 1.72M core | 60s
+  ...800,000 blocks | 16.8M human cols | 2.48M core | 80s
+  ...1,000,000 blocks | 21.2M human cols | 3.42M core | 101s
+  ...1,200,000 blocks | 25.3M human cols | 4.46M core | 123s
+  ...1,400,000 blocks | 29.4M human cols | 5.44M core | 145s
+  ...1,600,000 blocks | 33.9M human cols | 6.48M core | 167s
+  ...1,800,000 blocks | 38.4M human cols | 7.92M core | 190s
+  ...2,000,000 blocks | 42.9M human cols | 9.10M core | 213s
+  ...2,200,000 blocks | 47.6M human cols | 10.35M core | 236s
+  ...2,400,000 blocks | 53.0M human cols | 11.59M core | 258s
+  ...2,600,000 blocks | 57.9M human cols | 13.23M core | 282s
+  ...2,800,000 blocks | 62.9M human cols | 14.77M core | 305s
+  ...3,000,000 blocks | 67.9M human cols | 16.01M core | 328s
+  ...3,200,000 blocks | 73.8M human cols | 17.38M core | 350s
+  ...3,400,000 blocks | 79.1M human cols | 18.87M core | 373s
+  ...3,600,000 blocks | 84.4M human cols | 20.78M core | 398s
+  ...3,800,000 blocks | 89.4M human cols | 22.41M core | 422s
+  ...4,000,000 blocks | 94.2M human cols | 23.65M core | 444s
+  ...4,200,000 blocks | 99.6M human cols | 25.08M core | 467s
+  ...4,400,000 blocks | 105.5M human cols | 25.92M core | 488s
+  ...4,600,000 blocks | 110.4M human cols | 27.27M core | 511s
+  ...4,800,000 blocks | 115.3M human cols | 28.63M core | 535s
+  ...5,000,000 blocks | 120.3M human cols | 29.95M core | 557s
+  ...5,200,000 blocks | 126.0M human cols | 30.49M core | 574s
+  ...5,400,000 blocks | 130.5M human cols | 31.28M core | 594s
+  ...5,600,000 blocks | 134.7M human cols | 32.30M core | 617s
+  ...5,800,000 blocks | 139.8M human cols | 33.40M core | 639s
+  ...6,000,000 blocks | 145.2M human cols | 34.83M core | 661s
+  ...6,200,000 blocks | 150.4M human cols | 35.98M core | 683s
+  ...6,400,000 blocks | 156.1M human cols | 37.72M core | 706s
+  ...6,600,000 blocks | 161.1M human cols | 38.89M core | 728s
+  ...6,800,000 blocks | 165.7M human cols | 40.06M core | 751s
+  ...7,000,000 blocks | 171.9M human cols | 40.85M core | 769s
+  ...7,200,000 blocks | 177.9M human cols | 41.75M core | 790s
+  ...7,400,000 blocks | 181.9M human cols | 42.57M core | 811s
+  ...7,600,000 blocks | 186.1M human cols | 43.89M core | 834s
+  ...7,800,000 blocks | 191.2M human cols | 45.46M core | 857s
+  ...8,000,000 blocks | 196.1M human cols | 47.13M core | 882s
+  ...8,200,000 blocks | 201.2M human cols | 48.27M core | 904s
+  ...8,400,000 blocks | 206.2M human cols | 48.77M core | 923s
+  ...8,600,000 blocks | 211.3M human cols | 49.33M core | 942s
+  ...8,800,000 blocks | 215.9M human cols | 49.97M core | 962s
+  ...9,000,000 blocks | 221.2M human cols | 50.56M core | 981s
+  ...9,200,000 blocks | 226.1M human cols | 51.42M core | 1001s
+  ...9,400,000 blocks | 232.3M human cols | 51.76M core | 1017s
+  ...9,600,000 blocks | 237.4M human cols | 52.41M core | 1037s
+  ...9,800,000 blocks | 242.7M human cols | 53.25M core | 1056s
+  ...10,000,000 blocks | 248.2M human cols | 54.65M core | 1079s
+  ...10,200,000 blocks | 253.3M human cols | 56.07M core | 1101s
+  ...10,400,000 blocks | 257.5M human cols | 57.46M core | 1124s
+  ...10,600,000 blocks | 263.0M human cols | 58.50M core | 1145s
+  ...10,800,000 blocks | 267.7M human cols | 59.91M core | 1167s
+  ...11,000,000 blocks | 272.5M human cols | 61.16M core | 1189s
+  ...11,200,000 blocks | 277.5M human cols | 62.59M core | 1212s
+  ...11,400,000 blocks | 282.6M human cols | 63.74M core | 1233s
+  ...11,600,000 blocks | 288.2M human cols | 65.64M core | 1258s
+  ...11,800,000 blocks | 293.0M human cols | 66.70M core | 1279s
+  ...12,000,000 blocks | 298.0M human cols | 68.24M core | 1303s
+  ...12,200,000 blocks | 303.1M human cols | 69.44M core | 1325s
+  ...12,400,000 blocks | 308.9M human cols | 70.74M core | 1346s
+  ...12,600,000 blocks | 314.2M human cols | 71.49M core | 1366s
+  ...12,800,000 blocks | 322.0M human cols | 71.83M core | 1382s
+  ...13,000,000 blocks | 326.9M human cols | 72.62M core | 1402s
+  ...13,200,000 blocks | 332.1M human cols | 73.71M core | 1424s
+  ...13,400,000 blocks | 337.5M human cols | 74.30M core | 1443s
+  ...13,600,000 blocks | 343.0M human cols | 75.28M core | 1463s
+  ...13,800,000 blocks | 348.2M human cols | 76.24M core | 1484s
+  ...14,000,000 blocks | 354.5M human cols | 76.80M core | 1503s
+  ...14,200,000 blocks | 360.4M human cols | 77.69M core | 1522s
+  ...14,400,000 blocks | 365.6M human cols | 78.96M core | 1544s
+  ...14,600,000 blocks | 370.6M human cols | 80.92M core | 1570s
+  ...14,800,000 blocks | 376.1M human cols | 82.74M core | 1594s
+  ...15,000,000 blocks | 381.1M human cols | 84.02M core | 1616s
+  ...15,200,000 blocks | 386.2M human cols | 85.75M core | 1641s
+  ...15,400,000 blocks | 391.3M human cols | 87.63M core | 1666s
+  ...15,600,000 blocks | 395.9M human cols | 88.93M core | 1690s
+  ...15,800,000 blocks | 400.4M human cols | 90.20M core | 1713s
+  ...16,000,000 blocks | 405.0M human cols | 92.04M core | 1739s
+  ...16,200,000 blocks | 410.7M human cols | 93.41M core | 1761s
+  ...16,400,000 blocks | 416.4M human cols | 94.33M core | 1782s
+  ...16,600,000 blocks | 421.9M human cols | 95.55M core | 1804s
+  ...16,800,000 blocks | 426.7M human cols | 96.94M core | 1827s
+  ...17,000,000 blocks | 431.2M human cols | 98.42M core | 1851s
+  ...17,200,000 blocks | 436.2M human cols | 99.81M core | 1873s
+  ...17,400,000 blocks | 441.2M human cols | 101.35M core | 1897s
+  ...17,600,000 blocks | 445.6M human cols | 102.88M core | 1921s
+  ...17,800,000 blocks | 450.2M human cols | 104.31M core | 1943s
+  ...18,000,000 blocks | 455.1M human cols | 105.54M core | 1965s
+  ...18,200,000 blocks | 459.6M human cols | 106.19M core | 1985s
+  ...18,400,000 blocks | 464.6M human cols | 106.79M core | 2004s
+  ...18,600,000 blocks | 469.7M human cols | 107.42M core | 2023s
+  ...18,800,000 blocks | 474.8M human cols | 108.63M core | 2045s
+  ...19,000,000 blocks | 479.8M human cols | 109.85M core | 2067s
+  ...19,200,000 blocks | 484.8M human cols | 110.84M core | 2088s
+  ...19,400,000 blocks | 490.6M human cols | 112.30M core | 2111s
+  ...19,600,000 blocks | 495.7M human cols | 113.58M core | 2133s
+  ...19,800,000 blocks | 500.6M human cols | 114.88M core | 2156s
+  ...20,000,000 blocks | 506.1M human cols | 116.00M core | 2178s
+  ...20,200,000 blocks | 511.7M human cols | 116.80M core | 2198s
+  ...20,400,000 blocks | 516.4M human cols | 117.53M core | 2220s
+  ...20,600,000 blocks | 520.9M human cols | 118.73M core | 2244s
+  ...20,800,000 blocks | 525.5M human cols | 120.43M core | 2269s
+  ...21,000,000 blocks | 530.1M human cols | 122.17M core | 2293s
+  ...21,200,000 blocks | 534.6M human cols | 123.79M core | 2317s
+  ...21,400,000 blocks | 539.3M human cols | 125.67M core | 2342s
+  ...21,600,000 blocks | 544.4M human cols | 126.92M core | 2363s
+  ...21,800,000 blocks | 549.5M human cols | 128.48M core | 2386s
+  ...22,000,000 blocks | 555.5M human cols | 129.73M core | 2407s
+  ...22,200,000 blocks | 561.5M human cols | 130.76M core | 2428s
+  ...22,400,000 blocks | 566.7M human cols | 132.06M core | 2451s
+  ...22,600,000 blocks | 572.6M human cols | 133.62M core | 2473s
+  ...22,800,000 blocks | 578.1M human cols | 134.91M core | 2495s
+  ...23,000,000 blocks | 583.4M human cols | 137.17M core | 2521s
+  ...23,200,000 blocks | 588.5M human cols | 138.50M core | 2544s
+  ...23,400,000 blocks | 593.5M human cols | 139.43M core | 2565s
+  ...23,600,000 blocks | 598.4M human cols | 140.54M core | 2587s
+  ...23,800,000 blocks | 604.0M human cols | 141.90M core | 2610s
+  ...24,000,000 blocks | 609.2M human cols | 143.30M core | 2633s
+  ...24,200,000 blocks | 614.6M human cols | 144.42M core | 2655s
+  ...24,400,000 blocks | 620.0M human cols | 145.64M core | 2676s
+  ...24,600,000 blocks | 625.2M human cols | 147.05M core | 2699s
+  ...24,800,000 blocks | 632.2M human cols | 147.89M core | 2718s
+  ...25,000,000 blocks | 636.8M human cols | 149.56M core | 2742s
+  ...25,200,000 blocks | 642.0M human cols | 150.95M core | 2764s
+  ...25,400,000 blocks | 647.1M human cols | 152.44M core | 2787s
+  ...25,600,000 blocks | 651.2M human cols | 153.43M core | 2808s
+  ...25,800,000 blocks | 656.7M human cols | 155.17M core | 2831s
+  ...26,000,000 blocks | 661.0M human cols | 156.17M core | 2852s
+parse done: 26,067,874 blocks, 2858s
+f_core = 0.2360  (156,394,820 core / 662,559,351 human-valid columns, >= 18 of 20 core species)
+  narrow       k=4 tokens=773,677,762 GC=0.398 seps=4
+  medium       k=4 tokens=775,243,459 GC=0.398 seps=4
+  broad        k=4 tokens=759,073,207 GC=0.409 seps=4

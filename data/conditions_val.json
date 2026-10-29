@@ -1,0 +1,15 @@
+{
+  "human": "hg38",
+  "min_species": 18,
+  "_note": "Held-out VALIDATION corpus for the phylogenetic sweep. Human core of chr8+chr11 only (k=0, no homologs): every condition's model predicts held-out HUMAN DNA, so all spreads validate on one identical ruler and their loss surfaces are comparable. Same orthologous-core definition (>=18 of the 20 core_species) as the training corpora, so train and val are the same distribution (the GC-enriched core), not the whole chromosome. Build with chr8+chr11 MAF. Output: val.bin -> point sweep.slurm --val-bin at it.",
+  "core_species": [
+    "panTro4", "gorGor3", "ponAbe2", "nomLeu3",
+    "rheMac3", "papAnu2", "chlSab2", "calJac3",
+    "otoGar3", "mm10", "oryCun2", "cavPor3",
+    "canFam3", "equCab2", "bosTau8", "myoLuc2",
+    "loxAfr3", "triMan1", "dasNov3", "echTel2"
+  ],
+  "conditions": {
+    "val": []
+  }
+}

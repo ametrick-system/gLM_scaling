@@ -1,0 +1,55 @@
+{
+  "source_maf": "multiz100way/chr8.maf.gz,multiz100way/chr11.maf.gz",
+  "condition": "val",
+  "human": "hg38",
+  "species": [],
+  "k": 0,
+  "separator_id": 5,
+  "min_species": 18,
+  "core_species": [
+    "panTro4",
+    "gorGor3",
+    "ponAbe2",
+    "nomLeu3",
+    "rheMac3",
+    "papAnu2",
+    "chlSab2",
+    "calJac3",
+    "otoGar3",
+    "mm10",
+    "oryCun2",
+    "cavPor3",
+    "canFam3",
+    "equCab2",
+    "bosTau8",
+    "myoLuc2",
+    "loxAfr3",
+    "triMan1",
+    "dasNov3",
+    "echTel2"
+  ],
+  "f_core": 0.20704077667247545,
+  "vocab_size": 8,
+  "n_tokens": 57804272,
+  "n_separators": 0,
+  "frac_ambiguous": 0.0,
+  "frac_soft_masked": 0.15567285407556036,
+  "base_composition": {
+    "A": 17216815,
+    "C": 11693523,
+    "G": 11681561,
+    "T": 17212373,
+    "N": 0,
+    "id5": 0,
+    "id6": 0,
+    "id7": 0
+  },
+  "gc_content": 0.40438333000716625,
+  "segments": [
+    {
+      "species": "hg38",
+      "n_tokens": 57804272
+    }
+  ],
+  "dtype": "uint8"
+}
