@@ -235,9 +235,9 @@ def main():
         "max_steps": a.max_steps,
         "device": a.device, "dtype": a.dtype, "torch": torch.__version__,
         "hardware": {
-            "node": os.environ.get("GDNA_NODE"),
-            "gpu": os.environ.get("GDNA_GPU"),
-            "slurm_job": os.environ.get("GDNA_SLURM_JOB"),
+            "node": os.environ.get("GLM_NODE"),
+            "gpu": os.environ.get("GLM_GPU"),
+            "slurm_job": os.environ.get("GLM_SLURM_JOB"),
             "torch_cuda_build": torch.version.cuda,
             "mfu_peak_flops": peak,
             "mfu_peak_source": peak_src,

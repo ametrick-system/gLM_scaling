@@ -1,0 +1,15 @@
+{
+  "truncated": false,
+  "run_id": "C1e16_N3.1M_narrow_s0",
+  "tokens_seen": 316145664,
+  "flops_spent": 9995585046183936.0,
+  "budget_flops": 1e+16,
+  "n_non_embedding": 3148032,
+  "spread": "narrow",
+  "seed": 0,
+  "unique_tokens_U_D": 773677762,
+  "repetitions_R_D": -0.5911924608219514,
+  "val_loss_nats": 1.3207524721622468,
+  "val_bits_per_nt": 1.905443041830312,
+  "val_tokens_scored": 8192000
+}

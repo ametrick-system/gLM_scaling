@@ -21,9 +21,10 @@ LOOKUP_TABLE = np.full(256, 4, dtype=np.uint8) # default to ambiguous 'N' = 4
 REPEAT_LOOKUP_TABLE = np.zeros(256, dtype=np.uint8)
 
 for b, i in BASE_TO_ID.items():
-    LOOKUP_TABLE[ord(b)] = i # ASCII of character --> our defined base ID
+    LOOKUP_TABLE[ord(b)] = i # ASCII of character -> our defined base ID
     LOOKUP_TABLE[ord(b.lower())] = i # remove casing difference when converting ASCII -> ID
-    REPEAT_LOOKUP_TABLE[ord(b.lower())] = 1 # retain lowercase flag in repeat lookup table
+    if b != "N":
+        REPEAT_LOOKUP_TABLE[ord(b.lower())] = 1 # retain lowercase flag in repeat lookup table
 
 # ------------------------- Encoding and decoding ------------------------------
 

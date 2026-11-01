@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=gdna-corpora
+#SBATCH --job-name=glm-corpora
 #SBATCH --partition=day
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
@@ -17,26 +17,26 @@
 #      for c in chr1 chr2 chr3; do
 #        wget -P "$D" https://hgdownload.soe.ucsc.edu/goldenPath/hg38/multiz100way/maf/$c.maf.gz
 #      done
-# 2) submit (GDNA_MAF is space-separated; output to scratch, corpora are large):
-#      GDNA_MAF="$D/chr1.maf.gz $D/chr2.maf.gz $D/chr3.maf.gz" \
-#      GDNA_MANIFEST=conditions.json GDNA_OUT=~/palmer_scratch/corpora \
+# 2) submit (GLM_MAF is space-separated; output to scratch, corpora are large):
+#      GLM_MAF="$D/chr1.maf.gz $D/chr2.maf.gz $D/chr3.maf.gz" \
+#      GLM_MANIFEST=conditions.json GLM_OUT=~/palmer_scratch/corpora \
 #      sbatch build_corpora.mccleary.slurm
 #
 # No --account (day partition defaults to the gerstein assoc; add
 # #SBATCH --account=gerstein only if SLURM rejects it).
 set -uo pipefail
-GDNA_ROOT="${GDNA_ROOT:-${SLURM_SUBMIT_DIR:-$PWD}}"
-cd "${GDNA_ROOT}" || { echo "ABORT: cannot cd to ${GDNA_ROOT}" >&2; exit 1; }
-: "${GDNA_MANIFEST:?set GDNA_MANIFEST=conditions.json}"
-: "${GDNA_MAF:?set GDNA_MAF to the space-separated chr1/chr2/chr3 MAF paths}"
-for need in env.sh build_corpora.py prepare.py "${GDNA_MANIFEST}"; do
-  [[ -f "${need}" ]] || { echo "ABORT: ${need} missing under ${GDNA_ROOT}" >&2; exit 1; }
+GLM_ROOT="${GLM_ROOT:-${SLURM_SUBMIT_DIR:-$PWD}}"
+cd "${GLM_ROOT}" || { echo "ABORT: cannot cd to ${GLM_ROOT}" >&2; exit 1; }
+: "${GLM_MANIFEST:?set GLM_MANIFEST=conditions.json}"
+: "${GLM_MAF:?set GLM_MAF to the space-separated chr1/chr2/chr3 MAF paths}"
+for need in env.sh build_corpora.py prepare.py "${GLM_MANIFEST}"; do
+  [[ -f "${need}" ]] || { echo "ABORT: ${need} missing under ${GLM_ROOT}" >&2; exit 1; }
 done
 
 module load miniconda
 conda activate glm
 mkdir -p logs
 
-python build_corpora.py --maf ${GDNA_MAF} \
-  --manifest "${GDNA_MANIFEST}" \
-  --out-dir "${GDNA_OUT:-corpora}"
+python build_corpora.py --maf ${GLM_MAF} \
+  --manifest "${GLM_MANIFEST}" \
+  --out-dir "${GLM_OUT:-corpora}"

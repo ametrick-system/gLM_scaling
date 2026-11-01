@@ -1,0 +1,2 @@
+ABORT: scripts/env.sh not found under GLM_ROOT=/home/asm242/gLM_scaling
+       submit from the repo root, or pass GLM_ROOT=/path/to/glm-scaling

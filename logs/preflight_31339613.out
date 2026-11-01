@@ -1,0 +1,48 @@
+node    a1127u09n01.mghpcc.ycrc.yale.edu
+gpu     NVIDIA H100 80GB HBM3, 580.178.04, 81559 MiB
+python  /home/asm242/.conda/envs/glm/bin/python
+
+==== 1. device and kernel availability =========================
+  device      NVIDIA H100 80GB HBM3
+  capability  sm_90
+  vram        85.0 GB   visible GPUs 1
+  torch       2.11.0+cu128 (built for CUDA 12.8)
+  PASS fp32 matmul executes
+
+==== 2. bf16 ===================================================
+  PASS bf16 autocast matmul executes, output dtype torch.bfloat16
+
+==== 3. SDPA backends and attention memory =====================
+  ok        CUDNN_ATTENTION      peak     96.9 MB
+  ok        FLASH_ATTENTION      peak    103.2 MB
+  ok        EFFICIENT_ATTENTION  peak     96.9 MB
+  ok        MATH                 peak    935.3 MB
+
+  PASS CUDNN_ATTENTION is 9.7x leaner than MATH -- flash-style kernel confirmed
+
+==== 4. torch.compile ==========================================
+  PASS torch.compile forward+backward executes
+
+==== record this in every run's meta.json ======================
+{
+  "python": "3.12.14",
+  "torch": "2.11.0+cu128",
+  "torch_cuda_build": "12.8",
+  "cudnn": 91900,
+  "device": "NVIDIA H100 80GB HBM3",
+  "capability": "sm_90",
+  "vram_gb": 85.0,
+  "n_visible_gpus": 1,
+  "bf16": true,
+  "bf16_autocast_dtype": "torch.bfloat16",
+  "sdpa_peak_mb": {
+    "CUDNN_ATTENTION": 96.9,
+    "FLASH_ATTENTION": 103.2,
+    "EFFICIENT_ATTENTION": 96.9,
+    "MATH": 935.3
+  },
+  "sdpa_backend": "CUDNN_ATTENTION",
+  "torch_compile": true
+}
+
+All checks passed.

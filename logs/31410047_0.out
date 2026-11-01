@@ -1,0 +1,11 @@
+[node] a1127u44n01.mghpcc.ycrc.yale.edu  gpu=NVIDIA H100 80GB HBM3  torch=2.11.0+cu128
+[run] line=0 spread=narrow size_index=0 lr=1.037319e-03
+C1e16_N3.1M_narrow_s0 step 0/603 train 2.8632 val 2.1538 bits/nt  14k tok/s  mfu 0.0%
+C1e16_N3.1M_narrow_s0 step 100/603 train 1.9064 val 1.9179 bits/nt  361k tok/s  mfu 1.2%
+C1e16_N3.1M_narrow_s0 step 200/603 train 1.9015 val 1.9134 bits/nt  3483k tok/s  mfu 11.1%
+C1e16_N3.1M_narrow_s0 step 300/603 train 1.9024 val 1.9119 bits/nt  4277k tok/s  mfu 13.7%
+C1e16_N3.1M_narrow_s0 step 400/603 train 1.9016 val 1.9113 bits/nt  4832k tok/s  mfu 15.4%
+C1e16_N3.1M_narrow_s0 step 500/603 train 1.9003 val 1.9106 bits/nt  4830k tok/s  mfu 15.4%
+C1e16_N3.1M_narrow_s0 step 600/603 train 1.8997 val 1.9103 bits/nt  4697k tok/s  mfu 15.0%
+C1e16_N3.1M_narrow_s0 step 602/603 train 1.9005 val 1.9101 bits/nt  4164k tok/s  mfu 13.3%
+done C1e16_N3.1M_narrow_s0: 1.9054 bits/nt

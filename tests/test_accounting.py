@@ -20,6 +20,9 @@ def _repo_root() -> str:
 
 ROOT = _repo_root()
 sys.path.insert(0, ROOT)
+_data = os.path.join(ROOT, "data")
+if os.path.isdir(_data):
+    sys.path.insert(0, _data)
 
 import torch
 
@@ -66,7 +69,7 @@ def test_shape_ladder_is_monotone():
     assert ns == sorted(ns)
 
 def test_tokenizer_roundtrip_and_revcomp():
-    from prepare_data import decode, encode, revcomp_ids
+    from prepare import decode, encode, reverse_comp_ids as revcomp_ids
 
     ids, mask = encode("ACGTacgtNn")
     assert list(ids) == [0, 1, 2, 3, 0, 1, 2, 3, 4, 4]
@@ -126,7 +129,7 @@ def test_no_script_pins_a_card_specific_peak_flops():
         for i, line in enumerate(open(path, errors="replace"), 1):
             if line.lstrip().startswith("#"):
                 continue
-            if "GDNA_GPU_PEAK_FLOPS:=" in line or "--gpu-peak-flops" in line:
+            if "GLM_GPU_PEAK_FLOPS:=" in line or "--gpu-peak-flops" in line:
                 bad.append(f"{os.path.basename(path)}:{i}: {line.strip()[:70]}")
     assert not bad, "card-specific peak FLOPS pinned in:\n  " + "\n  ".join(bad)
 
